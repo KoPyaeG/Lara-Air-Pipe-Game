@@ -1,0 +1,51 @@
+{
+  "_$type": "Animator2D",
+  "enabled": true,
+  "controllerLayers": [
+    {
+      "name": "Base Layer",
+      "defaultStateName": "NewAnimation",
+      "playOnWake": true,
+      "blendingMode": 0,
+      "states": [
+        {
+          "name": "NewAnimation",
+          "clip": {
+            "_$uuid": "a767a4a0-8cc5-44e0-9664-e46ff947d1d3"
+          },
+          "loop": -1,
+          "speed": 1,
+          "clipEnd": 1,
+          "x": 1495.6074361822364,
+          "y": 509.476853061048,
+          "id": "0"
+        },
+        {
+          "x": 10,
+          "y": 100,
+          "_isLooping": 0,
+          "id": "-1",
+          "name": "enter",
+          "speed": 1,
+          "clipEnd": 1,
+          "soloTransitions": [
+            {
+              "id": "0"
+            }
+          ]
+        },
+        {
+          "x": 1706,
+          "y": 100,
+          "_isLooping": 0,
+          "id": "-2",
+          "name": "Any state",
+          "speed": 1,
+          "clipEnd": 1
+        }
+      ],
+      "defaultWeight": 1
+    }
+  ],
+  "layerW": 150
+}

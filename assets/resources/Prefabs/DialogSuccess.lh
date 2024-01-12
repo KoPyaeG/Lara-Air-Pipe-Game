@@ -1,0 +1,65 @@
+{
+  "_$ver": 1,
+  "_$id": "futro3jd",
+  "_$type": "Dialog",
+  "name": "Dialog",
+  "width": 1920,
+  "height": 1080,
+  "_mouseState": 2,
+  "_$comp": [
+    {
+      "_$type": "72ee2b16-d143-4b77-902d-e0bbe738b155",
+      "scriptPath": "../src/DialogSuccessScript.ts"
+    }
+  ],
+  "_$child": [
+    {
+      "_$id": "cr375bft",
+      "_$type": "Image",
+      "name": "background",
+      "x": 735,
+      "y": 340,
+      "width": 450,
+      "height": 260,
+      "top": 340,
+      "centerX": 0,
+      "skin": "res://c14cad4c-9c96-438c-ad22-22c6df737d51",
+      "sizeGrid": "24,26,27,30,0",
+      "color": "#ffffff"
+    },
+    {
+      "_$id": "cx8amagp",
+      "_$type": "Label",
+      "name": "Label",
+      "x": 717,
+      "y": 419,
+      "width": 486,
+      "height": 44,
+      "top": 419,
+      "centerX": 0,
+      "text": "You Win Go Next Level",
+      "font": "Bahnschrift",
+      "fontSize": 40,
+      "color": "rgba(37, 0, 255, 1)",
+      "align": "center",
+      "valign": "top",
+      "padding": "0,0,0,0"
+    },
+    {
+      "_$id": "6doncm3t",
+      "_$type": "Button",
+      "name": "btnClose",
+      "x": 900,
+      "y": 500,
+      "width": 120,
+      "height": 40,
+      "_mouseState": 2,
+      "top": 500,
+      "centerX": 0,
+      "skin": "res://b3995d80-70be-4f67-9c1e-bce8aac7f167",
+      "label": "Start",
+      "labelFont": "Bahnschrift",
+      "labelSize": 20
+    }
+  ]
+}

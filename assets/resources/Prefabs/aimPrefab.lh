@@ -1,0 +1,56 @@
+{
+  "_$ver": 1,
+  "_$id": "p74qvhvxp0",
+  "_$type": "Box",
+  "name": "Box",
+  "width": 400,
+  "height": 400,
+  "_$child": [
+    {
+      "_$id": "r6hvpyrq",
+      "_$type": "Image",
+      "name": "aimImage",
+      "x": 200,
+      "y": 200,
+      "width": 400,
+      "height": 400,
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "rotation": 1.7933336757808513,
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0,
+      "skin": "res://135a1928-5a24-49fc-81bd-b402e270201f",
+      "color": "#ffffff",
+      "_$comp": [
+        {
+          "_$type": "Animator2D",
+          "controller": {
+            "_$uuid": "a1c8261b-6690-4199-b9a2-a66abb2fcc0e",
+            "_$type": "AnimationController2D"
+          },
+          "controllerLayers": [
+            {
+              "_$type": "AnimatorControllerLayer2D",
+              "name": "Base Layer",
+              "states": [
+                {
+                  "_$type": "AnimatorState2D",
+                  "name": "NewAnimation1",
+                  "clipStart": 0,
+                  "clip": {
+                    "_$uuid": "a476abc4-4b3c-48c0-b859-7e19dfcb0d29",
+                    "_$type": "AnimationClip2D"
+                  },
+                  "soloTransitions": []
+                }
+              ],
+              "defaultStateName": "NewAnimation1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

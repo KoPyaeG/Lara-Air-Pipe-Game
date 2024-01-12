@@ -1,0 +1,95 @@
+{
+  "_$ver": 1,
+  "_$id": "lz2p0sl5tw",
+  "_$type": "Box",
+  "name": "Box",
+  "width": 400,
+  "height": 400,
+  "_$comp": [
+    {
+      "_$type": "4acce89f-c095-41e0-aa87-fe5c53307069",
+      "scriptPath": "../src/stopWatchScript.ts"
+    }
+  ],
+  "_$child": [
+    {
+      "_$id": "5cnl8hj9",
+      "_$type": "Sprite",
+      "name": "BaseSp",
+      "width": 400,
+      "height": 400,
+      "_gcmds": [
+        {
+          "_$type": "DrawCircleCmd",
+          "x": 0.5,
+          "y": 0.5,
+          "radius": 0.5,
+          "percent": true,
+          "lineWidth": 20,
+          "lineColor": "rgba(255, 255, 255, 1)"
+        }
+      ],
+      "mask": {
+        "_$ref": "w382bcll"
+      },
+      "_$child": [
+        {
+          "_$id": "b7myvujb",
+          "_$type": "Sprite",
+          "name": "insideSp",
+          "x": 20,
+          "y": 20,
+          "width": 360,
+          "height": 360,
+          "_gcmds": [
+            {
+              "_$type": "DrawCircleCmd",
+              "x": 0.5,
+              "y": 0.5,
+              "radius": 0.5,
+              "percent": true,
+              "lineWidth": 50,
+              "lineColor": "rgba(22, 186, 22, 1)"
+            }
+          ]
+        },
+        {
+          "_$id": "w382bcll",
+          "_$type": "Sprite",
+          "name": "timeMask",
+          "width": 400,
+          "height": 400,
+          "_gcmds": [
+            {
+              "_$type": "DrawCircleCmd",
+              "x": 0.5,
+              "y": 0.5,
+              "radius": 0.5,
+              "percent": true,
+              "lineWidth": 0,
+              "fillColor": "rgba(0, 0, 0, 1)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_$id": "nzoot2dy",
+      "_$type": "Label",
+      "name": "Label",
+      "x": 37,
+      "y": 115,
+      "width": 327,
+      "height": 170,
+      "centerX": 0,
+      "centerY": 0,
+      "text": "30\n",
+      "font": "Bahnschrift",
+      "fontSize": 201,
+      "color": "#FFFFFF",
+      "align": "center",
+      "valign": "top",
+      "padding": "0,0,0,0"
+    }
+  ]
+}
