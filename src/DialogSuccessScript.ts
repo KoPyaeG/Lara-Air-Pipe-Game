@@ -18,7 +18,7 @@ export class DialogSuccessScript extends Laya.Script {
 
         // console.log(background.width);
         
-
+        Laya.SoundManager.playSound('resources/audio/congratulate.mp3',1)
 
         let btnClose = this.owner.getChildByName('btnClose');
         btnClose.on(Laya.Event.CLICK ,()=>{

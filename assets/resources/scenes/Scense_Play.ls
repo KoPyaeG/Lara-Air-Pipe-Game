@@ -10,7 +10,8 @@
   "_$comp": [
     {
       "_$type": "f5fe7705-c6a2-48ae-8b0e-f05720cd225e",
-      "scriptPath": "../src/ScenesPlay.ts"
+      "scriptPath": "../src/ScenesPlay.ts",
+      "ball": null
     }
   ],
   "_$child": [
@@ -26,6 +27,13 @@
       "top": 0,
       "bottom": 0,
       "_$child": [
+        {
+          "_$id": "zkvvlyj8",
+          "_$type": "Sprite",
+          "name": "ballContainer",
+          "width": 1920,
+          "height": 1080
+        },
         {
           "_$id": "nov7ajt9",
           "_$prefab": "26c60b6e-1dd2-47f0-bfaf-1242a77c9920",
@@ -333,6 +341,24 @@
               ]
             }
           ]
+        },
+        {
+          "_$id": "05jk6tzv",
+          "_$type": "CheckBox",
+          "name": "checkSound",
+          "x": 20,
+          "y": 20,
+          "width": 128,
+          "height": 125,
+          "_mouseState": 2,
+          "left": 20,
+          "top": 20,
+          "stateNum": 2,
+          "skin": "res://51532428-a7cb-4bf0-84e4-718db07d8e2a",
+          "label": "",
+          "labelSize": 20,
+          "labelAlign": "left",
+          "labelVAlign": "top"
         }
       ]
     },
@@ -348,21 +374,6 @@
       "visible": false,
       "skin": "res://e87c1c49-a680-4fb8-a4d7-d2e60c3ab10a",
       "color": "#ffffff"
-    },
-    {
-      "_$id": "fznd7mbj",
-      "_$type": "Button",
-      "name": "testDialog",
-      "x": 155,
-      "y": 514,
-      "width": 228,
-      "height": 52,
-      "_mouseState": 2,
-      "left": 155,
-      "centerY": 0,
-      "skin": "res://b3995d80-70be-4f67-9c1e-bce8aac7f167",
-      "label": "Open Dialog Test",
-      "labelSize": 20
     }
   ]
 }

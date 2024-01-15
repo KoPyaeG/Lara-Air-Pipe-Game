@@ -9,7 +9,7 @@ export class ScenceStartScript extends Laya.Script {
 
     onEnable(): void {
         this.play.on(Laya.Event.CLICK,this,()=>{
-            Laya.Scene.open('/resources/scenes/Dialog_start.ls',false)
+            Laya.Scene.open('/resources/scenes/Scense_Play.ls')
         })
     }
 }

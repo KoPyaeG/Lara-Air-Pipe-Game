@@ -1,0 +1,29 @@
+{
+  "_$ver": 1,
+  "_$id": "y5x99iyczk",
+  "_$type": "Box",
+  "name": "Box",
+  "width": 60,
+  "height": 60,
+  "_$comp": [
+    {
+      "_$type": "1c1b4ce7-8de5-429d-94a0-684f595f28e1",
+      "scriptPath": "../src/BallonScript.ts"
+    }
+  ],
+  "_$child": [
+    {
+      "_$id": "5k2br9j5",
+      "_$type": "Image",
+      "name": "Image",
+      "width": 60,
+      "height": 60,
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0,
+      "skin": "res://443329e8-90c9-4927-92e7-9db2d43b2d8c",
+      "color": "#ffffff"
+    }
+  ]
+}

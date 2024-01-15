@@ -13,6 +13,7 @@ export class Dialog extends Laya.Script {
         let levelLabel = dialog.getChildByName('Image').getChildByName('levelLabel') as Laya.Label;
         levelLabel.text = 'Level ' + GameManager.getInstance().level
         play.on(Laya.Event.CLICK,this,()=>{
+            Laya.SoundManager.playSound('resources/audio/ready_go.mp3',1)
             Laya.stage.event(Laya.Event.MESSAGE,{type:'gameStart'})
             this.owner.destroy(true)
         })

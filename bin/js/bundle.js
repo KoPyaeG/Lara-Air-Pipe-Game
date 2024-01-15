@@ -63,6 +63,7 @@
       let levelLabel = dialog.getChildByName("Image").getChildByName("levelLabel");
       levelLabel.text = "Level " + GameManager.getInstance().level;
       play.on(Laya.Event.CLICK, this, () => {
+        Laya.SoundManager.playSound("resources/audio/ready_go.mp3", 1);
         Laya.stage.event(Laya.Event.MESSAGE, { type: "gameStart" });
         this.owner.destroy(true);
       });
@@ -93,7 +94,7 @@
   var ScenceStartScript = class extends Laya.Script {
     onEnable() {
       this.play.on(Laya.Event.CLICK, this, () => {
-        Laya.Scene.open("/resources/scenes/Dialog_start.ls", false);
+        Laya.Scene.open("/resources/scenes/Scense_Play.ls");
       });
     }
   };
@@ -105,8 +106,49 @@
     regClass4("2733d589-8edb-4af3-9d24-2921163a6ec0", "../src/ScenceStartScript.ts")
   ], ScenceStartScript);
 
-  // src/stopWatchScript.ts
+  // src/BallonScript.ts
   var { regClass: regClass5, property: property5 } = Laya;
+  var BallonScript = class extends Laya.Script {
+    constructor() {
+      super(...arguments);
+      this.speed = 800;
+      this.auto = false;
+    }
+    onEnable() {
+      this.owner.pos(this.x, this.y);
+      Laya.Tween.to(this.owner, {
+        x: this.x2,
+        y: this.y2
+      }, 1e3, Laya.Ease.linearNone, Laya.Handler.create(this, () => {
+        this.owner.pos(this.x3, this.y3);
+        this.auto = true;
+      }), this.delay);
+    }
+    initBallon(x, y, x2, y2, x3, y3, delay) {
+      this.x = x;
+      this.y = y;
+      this.x2 = x2;
+      this.y2 = y2;
+      this.x3 = x3;
+      this.y3 = y3;
+      this.delay = delay;
+    }
+    onUpdate() {
+      if (!this.auto)
+        return;
+      console.log("speed", Laya.timer.delta / 1e3);
+      this.owner.x += this.speed * Laya.timer.delta / 1e3;
+      if (this.owner.x > 3e3)
+        this.owner.destroy(true);
+    }
+  };
+  __name(BallonScript, "BallonScript");
+  BallonScript = __decorateClass([
+    regClass5("1c1b4ce7-8de5-429d-94a0-684f595f28e1", "../src/BallonScript.ts")
+  ], BallonScript);
+
+  // src/stopWatchScript.ts
+  var { regClass: regClass6, property: property6 } = Laya;
   var GREEN = 1;
   var YELLOW = 2;
   var RED = 3;
@@ -164,11 +206,11 @@
   };
   __name(stopWatchScript, "stopWatchScript");
   stopWatchScript = __decorateClass([
-    regClass5("4acce89f-c095-41e0-aa87-fe5c53307069", "../src/stopWatchScript.ts")
+    regClass6("4acce89f-c095-41e0-aa87-fe5c53307069", "../src/stopWatchScript.ts")
   ], stopWatchScript);
 
   // src/ScenesPlay.ts
-  var { regClass: regClass6, property: property6 } = Laya;
+  var { regClass: regClass7, property: property7 } = Laya;
   var Play = class extends Laya.Script {
     constructor() {
       super(...arguments);
@@ -178,11 +220,13 @@
     onEnable() {
       this.intercom();
       this.initLevel();
-      this.pipe = this.owner.getChildByName("pipe");
-      let openDialogBtn = this.owner.getChildByName("testDialog");
-      openDialogBtn.on(Laya.Event.CLICK, () => {
-        Laya.Dialog.open("resources/prefabs/DialogSuccess.lh");
+      this.soundManager();
+      const path = "./resources/Prefabs/BallonPrefab.lh";
+      Laya.loader.load(path).then((res) => {
+        console.log("res", res);
+        this.ballPrefab = res;
       });
+      this.pipe = this.owner.getChildByName("pipe");
     }
     intercom() {
       Laya.stage.on(Laya.Event.MESSAGE, this, (data) => {
@@ -210,6 +254,7 @@
             {
               Laya.timer.once(1e3, this, () => {
                 GameManager.getInstance().level++;
+                localStorage.setItem("level", GameManager.getInstance().level.toString());
                 this.initLevel();
               });
             }
@@ -226,56 +271,17 @@
       Laya.Scene.open("resources/scenes/Dialog_start.ls", false);
     }
     initUi() {
-      this.itemData = [
-        {
-          id: 1,
-          itemImg: "atlas/img/pipe01.png",
-          desc: "Pipe1",
-          port1: 1,
-          port2: 3
-        },
-        {
-          id: 2,
-          itemImg: "atlas/img/pipe02.png",
-          desc: "Pipe1",
-          port1: 2,
-          port2: 4
-        },
-        {
-          id: 3,
-          itemImg: "atlas/img/pipe03.png",
-          desc: "Pipe1",
-          port1: 1,
-          port2: 4
-        },
-        {
-          id: 4,
-          itemImg: "atlas/img/pipe04.png",
-          desc: "Pipe1",
-          port1: 3,
-          port2: 4
-        },
-        {
-          id: 5,
-          itemImg: "atlas/img/pipe05.png",
-          desc: "Pipe1",
-          port1: 2,
-          port2: 3
-        },
-        {
-          id: 6,
-          itemImg: "atlas/img/pipe06.png",
-          desc: "Pipe1",
-          port1: 2,
-          port2: 1
-        }
-      ];
+      this.itemData = GameManager.getInstance().toolInfo;
       let stopSwitch = this.owner.getChildByName("Box").getChildByName("StopWatch");
       this.stopSwitchSp = stopSwitch.getComponent(stopWatchScript);
       this.itemList = this.owner.getChildByName("Box").getChildByName("itemList");
       this.itemList.array = this.itemData;
       this.itemList.renderHandler = new Laya.Handler(this, this.renderItemList);
       this.itemList.mouseHandler = new Laya.Handler(this, this.mouseOnItemList);
+      this.ballContainer = this.owner.getChildByName("Box").getChildByName("ballContainer");
+      this.ballContainer.width = Laya.stage.width;
+      this.ballContainer.height = Laya.stage.height;
+      this.assembleContainer = this.owner.getChildByName("Box").getChildByName("assembleBg");
     }
     initAssemble() {
       this.assembleData = [
@@ -374,6 +380,9 @@
         console.log("connected...");
         this.stopSwitchSp.stopRound(true);
         Laya.Dialog.open("resources/prefabs/DialogSuccess.lh");
+        for (let i = 0; i < 5; i++) {
+          this.addBall(i * 200);
+        }
       } else {
         console.log("not connected...");
         if (result.nextIndex !== -1) {
@@ -456,16 +465,44 @@
         connected
       };
     }
+    addBall(delay) {
+      console.log("lllll", this.assembleContainer.width);
+      console.log();
+      let x2 = this.assembleContainer.x - 80;
+      let y2 = this.assembleContainer.y + 104;
+      let x3 = this.assembleContainer.x + this.assembleContainer.width;
+      let y3 = this.assembleContainer.y + 562;
+      let ball = Laya.Pool.getItemByCreateFun("ball", this.ballPrefab.create, this.ballPrefab);
+      let ballSp = ball.getComponent(BallonScript);
+      ballSp.initBallon(-100, y2, x2, y2, x3, y3, delay);
+      this.ballContainer.addChild(ball);
+    }
+    soundManager() {
+      Laya.SoundManager.playMusic("resources/audio/background.mp3", 0);
+      let checkSound = this.owner.getChildByName("Box").getChildByName("checkSound");
+      checkSound.selected = false;
+      checkSound.on(Laya.Event.CHANGE, this, () => {
+        if (checkSound.selected == false) {
+          Laya.SoundManager.playMusic("resources/audio/background.mp3", 0);
+        } else {
+          Laya.SoundManager.stopAll();
+        }
+      });
+    }
   };
   __name(Play, "Play");
+  __decorateClass([
+    property7(Laya.Prefab)
+  ], Play.prototype, "ball", 2);
   Play = __decorateClass([
-    regClass6("f5fe7705-c6a2-48ae-8b0e-f05720cd225e", "../src/ScenesPlay.ts")
+    regClass7("f5fe7705-c6a2-48ae-8b0e-f05720cd225e", "../src/ScenesPlay.ts")
   ], Play);
 
   // src/DialogSuccessScript.ts
-  var { regClass: regClass7, property: property7 } = Laya;
+  var { regClass: regClass8, property: property8 } = Laya;
   var DialogSuccessScript = class extends Laya.Script {
     onEnable() {
+      Laya.SoundManager.playSound("resources/audio/congratulate.mp3", 1);
       let btnClose = this.owner.getChildByName("btnClose");
       btnClose.on(Laya.Event.CLICK, () => {
         Laya.stage.event(Laya.Event.MESSAGE, { type: "success" });
@@ -475,7 +512,63 @@
   };
   __name(DialogSuccessScript, "DialogSuccessScript");
   DialogSuccessScript = __decorateClass([
-    regClass7("72ee2b16-d143-4b77-902d-e0bbe738b155", "../src/DialogSuccessScript.ts")
+    regClass8("72ee2b16-d143-4b77-902d-e0bbe738b155", "../src/DialogSuccessScript.ts")
   ], DialogSuccessScript);
+
+  // src/Loading.generated.ts
+  var _LoadingBase = class _LoadingBase extends Laya.Scene {
+  };
+  __name(_LoadingBase, "LoadingBase");
+  var LoadingBase = _LoadingBase;
+
+  // src/Loading.ts
+  var { regClass: regClass9, property: property9 } = Laya;
+  var Loading = class extends LoadingBase {
+    onEnable() {
+      this.loadingBar.value = 0.75;
+      this.loaderToolInfoConfig();
+      this.loadAudioConfig();
+      this.getLoaclStorage();
+    }
+    loaderToolInfoConfig() {
+      const jsonPath = "./resources/config/config_toolInfo.json";
+      Laya.loader.load(jsonPath, Laya.loader.JSON).then((json) => {
+        GameManager.getInstance().toolInfo = json.data;
+        console.log("data", GameManager.getInstance().toolInfo);
+      });
+    }
+    loadAudioConfig() {
+      const jsonPath = "./resources/config/config_audio.json";
+      Laya.loader.load(jsonPath, Laya.loader.JSON).then((json) => {
+        let audioPath = json.data;
+        console.log(audioPath);
+        this.loadAudio(audioPath);
+      });
+    }
+    loadAudio(path) {
+      Laya.loader.load(path, null, Laya.Handler.create(this, this.onLoading, null, false)).then((res) => {
+        if (res) {
+          Laya.Scene.open("resources/scenes/Scence_start.ls");
+        }
+      });
+    }
+    onLoading(progress) {
+      this.loadingBar.value = progress;
+    }
+    getLoaclStorage() {
+      let level = localStorage.getItem("level");
+      console.log(level);
+      if (level == null) {
+        localStorage.setItem("level", "1");
+        GameManager.getInstance().level = 1;
+      } else {
+        GameManager.getInstance().level = parseInt(level);
+      }
+    }
+  };
+  __name(Loading, "Loading");
+  Loading = __decorateClass([
+    regClass9("89fd969b-f1c4-4854-957d-f9773c2e6aa4", "../src/Loading.ts")
+  ], Loading);
 })();
 //# sourceMappingURL=bundle.js.map
